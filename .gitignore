@@ -1,0 +1,50 @@
+# macOS
+.DS_Store
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.egg
+.mypy_cache/
+.pytest_cache/
+.coverage
+
+# Virtual environments
+.venv/
+venv/
+env/
+backend/.venv/
+backend/venv/
+
+# Environment files
+.env
+.env.*
+!*.example
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+
+# Node.js artifacts
+frontend/node_modules/
+frontend/.next/
+frontend/.turbo/
+frontend/.cache/
+frontend/out/
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Logs
+**/logs/
+**/*.log
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+

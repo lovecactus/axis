@@ -29,6 +29,7 @@ frontend/.env.*
 
 # Node.js artifacts
 frontend/node_modules/
+frontend/.next/
 
 # Build artifacts
 dist/

@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+psycopg[binary]
+alembic
+pydantic
+pydantic-settings
+python-dotenv
+redis
+celery
+python-jose[cryptography]
+passlib[bcrypt]
+httpx
+privy-client
+black
+ruff
+

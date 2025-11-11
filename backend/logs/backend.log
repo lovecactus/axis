@@ -1,0 +1,358 @@
+2025-11-11 10:26:21,166 INFO [app.tasks.router] Listing tasks
+2025-11-11 10:27:19,785 INFO [app.tasks.router] Listing tasks
+2025-11-11 10:31:46 INFO [uvicorn.error] Started server process [60424]
+2025-11-11 10:31:46 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 10:31:46 INFO [uvicorn.error] Application startup complete.
+2025-11-11 10:31:46 INFO [uvicorn.error] Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-11-11 10:31:52 INFO [uvicorn.access] 127.0.0.1:52716 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:31:52 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 51.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:31:52 INFO [uvicorn.access] 127.0.0.1:52716 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 10:32:17 INFO [uvicorn.access] 127.0.0.1:52983 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:32:17 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 51.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:32:17 INFO [uvicorn.access] 127.0.0.1:52988 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 10:44:46 INFO [uvicorn.error] Shutting down
+2025-11-11 10:44:46 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 10:44:46 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 10:44:46 INFO [uvicorn.error] Finished server process [60424]
+2025-11-11 10:44:54 INFO [uvicorn.error] Started server process [70496]
+2025-11-11 10:44:54 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 10:44:54 INFO [uvicorn.error] Application startup complete.
+2025-11-11 10:44:54 INFO [uvicorn.error] Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-11-11 10:53:36 INFO [uvicorn.access] 127.0.0.1:57359 - "HEAD /health HTTP/1.1" 405
+2025-11-11 10:53:41 INFO [uvicorn.access] 127.0.0.1:57387 - "GET /health HTTP/1.1" 200
+2025-11-11 10:55:00 INFO [uvicorn.access] 127.0.0.1:57819 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:55:00 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:55:00 INFO [uvicorn.access] 127.0.0.1:57825 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 10:55:56 INFO [uvicorn.access] 127.0.0.1:58104 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 10:55:56 INFO [app.taskdetail] Returning task detail id=1 data={'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}
+2025-11-11 10:55:56 INFO [uvicorn.access] 127.0.0.1:58108 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 10:56:00 INFO [uvicorn.access] 127.0.0.1:58104 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 10:56:00 INFO [app.taskdetail] Returning task detail id=1 data={'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}
+2025-11-11 10:56:00 INFO [uvicorn.access] 127.0.0.1:58108 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 10:56:09 INFO [uvicorn.access] 127.0.0.1:58200 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:56:09 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:56:09 INFO [uvicorn.access] 127.0.0.1:58202 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 10:56:14 INFO [uvicorn.access] 127.0.0.1:58248 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:56:14 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:56:14 INFO [uvicorn.access] 127.0.0.1:58250 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 10:58:32 INFO [uvicorn.access] 127.0.0.1:58777 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:58:32 INFO [uvicorn.access] 127.0.0.1:58781 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:58:32 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:58:32 INFO [uvicorn.access] 127.0.0.1:58777 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:58:32 INFO [uvicorn.access] 127.0.0.1:58782 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 10:58:32 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:58:32 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:58:32 INFO [uvicorn.access] 127.0.0.1:58787 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 10:58:32 INFO [uvicorn.access] 127.0.0.1:58788 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 10:59:32 INFO [uvicorn.access] 127.0.0.1:59111 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:59:32 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:59:32 INFO [uvicorn.access] 127.0.0.1:59113 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 10:59:35 INFO [uvicorn.access] 127.0.0.1:59111 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:59:35 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:59:35 INFO [uvicorn.access] 127.0.0.1:59113 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 10:59:40 INFO [uvicorn.access] 127.0.0.1:59165 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 10:59:40 INFO [app.taskdetail] Returning task detail id=1 data={'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}
+2025-11-11 10:59:40 INFO [uvicorn.access] 127.0.0.1:59167 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 10:59:43 INFO [uvicorn.access] 127.0.0.1:59165 - "GET /tasks HTTP/1.1" 307
+2025-11-11 10:59:43 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 10:59:43 INFO [uvicorn.access] 127.0.0.1:59167 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 11:01:25 INFO [uvicorn.access] 127.0.0.1:59699 - "GET /tasks HTTP/1.1" 307
+2025-11-11 11:01:25 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 11:01:25 INFO [uvicorn.access] 127.0.0.1:59705 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 11:01:28 INFO [uvicorn.access] 127.0.0.1:59699 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 11:01:28 INFO [app.taskdetail] Returning task detail id=1 data={'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}
+2025-11-11 11:01:28 INFO [uvicorn.access] 127.0.0.1:59705 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 11:08:12 INFO [uvicorn.access] 127.0.0.1:60848 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 11:08:12 INFO [app.taskdetail] Returning task detail id=1 data={'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}
+2025-11-11 11:08:12 INFO [uvicorn.access] 127.0.0.1:60850 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 11:09:41 INFO [uvicorn.access] 127.0.0.1:61302 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 11:09:41 INFO [app.taskdetail] Returning task detail id=1 data={'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}
+2025-11-11 11:09:41 INFO [uvicorn.access] 127.0.0.1:61304 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 11:10:11 INFO [uvicorn.access] 127.0.0.1:61367 - "GET /tasks HTTP/1.1" 307
+2025-11-11 11:10:11 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 11:10:11 INFO [uvicorn.access] 127.0.0.1:61369 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 11:10:16 INFO [uvicorn.access] 127.0.0.1:61376 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 11:10:16 INFO [app.taskdetail] Returning task detail id=1 data={'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}
+2025-11-11 11:10:16 INFO [uvicorn.access] 127.0.0.1:61378 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 11:10:19 INFO [uvicorn.access] 127.0.0.1:61376 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 11:10:19 INFO [app.taskdetail] Returning task detail id=1 data={'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}
+2025-11-11 11:10:19 INFO [uvicorn.access] 127.0.0.1:61378 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 11:11:07 INFO [uvicorn.access] 127.0.0.1:61494 - "GET /tasks HTTP/1.1" 307
+2025-11-11 11:11:07 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 11:11:07 INFO [uvicorn.access] 127.0.0.1:61496 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 11:11:28 INFO [uvicorn.access] 127.0.0.1:61586 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 11:11:28 INFO [app.taskdetail] Returning task detail id=1 data={'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}
+2025-11-11 11:11:28 INFO [uvicorn.access] 127.0.0.1:61588 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 11:11:43 INFO [uvicorn.access] 127.0.0.1:61644 - "GET /tasks HTTP/1.1" 307
+2025-11-11 11:11:43 INFO [app.tasks] Listing tasks count=2 data=[{'id': 1, 'name': '桌面机械臂抓取', 'description': '操控机械臂抓起目标方块并放入指定区域。', 'difficulty': '新手友好', 'expected_duration': 3, 'success_rate': 72.5, 'thumbnail': '/design/Task-Detail.png'}, {'id': 2, 'name': '滑轨推球', 'description': '通过推杆控制，将钢球推到目标位置。', 'difficulty': '中等', 'expected_duration': 5, 'success_rate': 52.1, 'thumbnail': '/design/Task-Detail.png'}]
+2025-11-11 11:11:43 INFO [uvicorn.access] 127.0.0.1:61646 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 11:19:29 INFO [uvicorn.error] Shutting down
+2025-11-11 11:19:29 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 11:19:29 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 11:19:29 INFO [uvicorn.error] Finished server process [70496]
+2025-11-11 11:53:23 INFO [uvicorn.error] Started server process [24456]
+2025-11-11 11:53:23 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 11:53:23 INFO [uvicorn.error] Application startup complete.
+2025-11-11 11:53:23 INFO [uvicorn.error] Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-11-11 11:53:30 INFO [uvicorn.access] 127.0.0.1:55827 - "GET /tasks HTTP/1.1" 307
+2025-11-11 11:53:30 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x113454980>, <app.models.task.Task object at 0x113409e50>]
+2025-11-11 11:53:30 INFO [uvicorn.access] 127.0.0.1:55827 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 11:53:42 INFO [uvicorn.access] 127.0.0.1:55878 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 11:53:42 INFO [app.taskdetail] Returning task detail id=1 data=<app.models.task.Task object at 0x11340a0d0>
+2025-11-11 11:53:42 INFO [uvicorn.access] 127.0.0.1:55878 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 11:59:46 INFO [uvicorn.error] Shutting down
+2025-11-11 11:59:46 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 11:59:46 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 11:59:46 INFO [uvicorn.error] Finished server process [24456]
+2025-11-11 12:00:44 INFO [uvicorn.error] Started server process [30655]
+2025-11-11 12:00:44 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 12:00:44 INFO [uvicorn.error] Application startup complete.
+2025-11-11 12:01:00 INFO [uvicorn.access] 127.0.0.1:57386 - "GET /tasks HTTP/1.1" 307
+2025-11-11 12:01:00 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1138c8d70>, <app.models.task.Task object at 0x1132ba0d0>]
+2025-11-11 12:01:00 INFO [uvicorn.access] 127.0.0.1:57386 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 12:01:39 INFO [uvicorn.access] 127.0.0.1:57661 - "GET /tasks HTTP/1.1" 307
+2025-11-11 12:01:39 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132ba850>, <app.models.task.Task object at 0x1132a9940>]
+2025-11-11 12:01:39 INFO [uvicorn.access] 127.0.0.1:57663 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 12:01:44 INFO [uvicorn.access] 127.0.0.1:57705 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 12:01:44 INFO [app.taskdetail] Returning task detail id=1 data=<app.models.task.Task object at 0x1132a9e00>
+2025-11-11 12:01:44 INFO [uvicorn.access] 127.0.0.1:57707 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 12:01:46 INFO [uvicorn.access] 127.0.0.1:57705 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 12:01:46 INFO [app.taskdetail] Returning task detail id=1 data=<app.models.task.Task object at 0x1132c9a30>
+2025-11-11 12:01:46 INFO [uvicorn.access] 127.0.0.1:57707 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 12:01:47 INFO [uvicorn.access] 127.0.0.1:57705 - "GET /tasks HTTP/1.1" 307
+2025-11-11 12:01:47 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a2690>, <app.models.task.Task object at 0x1132a2360>]
+2025-11-11 12:01:47 INFO [uvicorn.access] 127.0.0.1:57707 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 12:27:51 INFO [uvicorn.access] 127.0.0.1:65291 - "GET /tasks HTTP/1.1" 307
+2025-11-11 12:27:52 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1138f4150>, <app.models.task.Task object at 0x1138f4650>]
+2025-11-11 12:27:52 INFO [uvicorn.access] 127.0.0.1:65293 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:29:33 INFO [uvicorn.access] 127.0.0.1:62712 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:29:34 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1138e5220>, <app.models.task.Task object at 0x1138e47d0>]
+2025-11-11 14:29:34 INFO [uvicorn.access] 127.0.0.1:62714 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:29:38 INFO [uvicorn.access] 127.0.0.1:62750 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:29:38 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1138c27b0>, <app.models.task.Task object at 0x1138c25f0>]
+2025-11-11 14:29:38 INFO [uvicorn.access] 127.0.0.1:62752 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:29:39 INFO [uvicorn.access] 127.0.0.1:62750 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:29:39 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132861a0>, <app.models.task.Task object at 0x1130f2ed0>]
+2025-11-11 14:29:39 INFO [uvicorn.access] 127.0.0.1:62752 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:30:03 INFO [uvicorn.access] 127.0.0.1:62893 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:30:03 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1130f2f90>, <app.models.task.Task object at 0x11316f120>]
+2025-11-11 14:30:03 INFO [uvicorn.access] 127.0.0.1:62895 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:30:05 INFO [uvicorn.access] 127.0.0.1:62893 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:30:05 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x11316eba0>, <app.models.task.Task object at 0x1138de530>]
+2025-11-11 14:30:05 INFO [uvicorn.access] 127.0.0.1:62895 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:30:05 INFO [uvicorn.access] 127.0.0.1:62893 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:30:05 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1138de8f0>, <app.models.task.Task object at 0x1132a5880>]
+2025-11-11 14:30:05 INFO [uvicorn.access] 127.0.0.1:62895 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:41:16 INFO [uvicorn.access] 127.0.0.1:49492 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:41:16 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a5520>, <app.models.task.Task object at 0x1132a5fd0>]
+2025-11-11 14:41:16 INFO [uvicorn.access] 127.0.0.1:49494 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:41:21 INFO [uvicorn.access] 127.0.0.1:49535 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:41:21 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a5520>, <app.models.task.Task object at 0x1132a5fd0>]
+2025-11-11 14:41:21 INFO [uvicorn.access] 127.0.0.1:49537 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:41:22 INFO [uvicorn.access] 127.0.0.1:49535 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:41:22 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a5520>, <app.models.task.Task object at 0x1132a5fd0>]
+2025-11-11 14:41:22 INFO [uvicorn.access] 127.0.0.1:49537 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:41:37 INFO [uvicorn.access] 127.0.0.1:49605 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:41:37 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a5520>, <app.models.task.Task object at 0x1132a5fd0>]
+2025-11-11 14:41:37 INFO [uvicorn.access] 127.0.0.1:49607 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:41:39 INFO [uvicorn.access] 127.0.0.1:49605 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:41:39 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a5fd0>, <app.models.task.Task object at 0x1132a57f0>]
+2025-11-11 14:41:39 INFO [uvicorn.access] 127.0.0.1:49607 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:41:39 INFO [uvicorn.access] 127.0.0.1:49605 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:41:39 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a5880>, <app.models.task.Task object at 0x1132a5fd0>]
+2025-11-11 14:41:39 INFO [uvicorn.access] 127.0.0.1:49607 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 14:42:28 INFO [uvicorn.access] 127.0.0.1:49774 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 14:42:28 INFO [uvicorn.access] 127.0.0.1:49777 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 14:42:28 INFO [app.taskdetail] Returning task detail id=1 data=<app.models.task.Task object at 0x1132a5eb0>
+2025-11-11 14:42:28 INFO [uvicorn.access] 127.0.0.1:49778 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 14:42:28 INFO [app.taskdetail] Returning task detail id=1 data=<app.models.task.Task object at 0x1132a6060>
+2025-11-11 14:42:28 INFO [uvicorn.access] 127.0.0.1:49774 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 14:42:32 INFO [uvicorn.access] 127.0.0.1:49793 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 14:42:32 INFO [app.taskdetail] Returning task detail id=1 data=<app.models.task.Task object at 0x1132a5520>
+2025-11-11 14:42:32 INFO [uvicorn.access] 127.0.0.1:49795 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 14:45:51 INFO [uvicorn.access] 127.0.0.1:50472 - "GET /tasks HTTP/1.1" 307
+2025-11-11 14:45:51 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a60f0>, <app.models.task.Task object at 0x1132a5eb0>]
+2025-11-11 14:45:51 INFO [uvicorn.access] 127.0.0.1:50474 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:00:16 INFO [uvicorn.access] 127.0.0.1:53285 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:00:16 INFO [uvicorn.access] 127.0.0.1:53293 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:00:16 INFO [uvicorn.access] 127.0.0.1:53294 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:00:17 INFO [uvicorn.access] 127.0.0.1:53293 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:00:17 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a5f40>, <app.models.task.Task object at 0x1132a57f0>]
+2025-11-11 15:00:17 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a6180>, <app.models.task.Task object at 0x1132a5520>]
+2025-11-11 15:00:17 INFO [uvicorn.access] 127.0.0.1:53295 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:00:17 INFO [uvicorn.access] 127.0.0.1:53285 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:00:17 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1131bff50>, <app.models.task.Task object at 0x1132a5520>]
+2025-11-11 15:00:17 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a6060>, <app.models.task.Task object at 0x1132a5eb0>]
+2025-11-11 15:00:17 INFO [uvicorn.access] 127.0.0.1:53303 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:00:17 INFO [uvicorn.access] 127.0.0.1:53302 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:00:24 INFO [uvicorn.access] 127.0.0.1:53333 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:00:24 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a5880>, <app.models.task.Task object at 0x1132a6180>]
+2025-11-11 15:00:24 INFO [uvicorn.access] 127.0.0.1:53335 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:00:24 INFO [uvicorn.access] 127.0.0.1:53333 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:00:24 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1132a5880>, <app.models.task.Task object at 0x1132a6180>]
+2025-11-11 15:00:24 INFO [uvicorn.access] 127.0.0.1:53335 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:14:59 INFO [uvicorn.error] Shutting down
+2025-11-11 15:14:59 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:15:00 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:15:00 INFO [uvicorn.error] Finished server process [30655]
+2025-11-11 15:15:03 INFO [uvicorn.error] Started server process [86289]
+2025-11-11 15:15:03 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:15:03 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:15:22 INFO [uvicorn.error] Shutting down
+2025-11-11 15:15:23 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:15:23 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:15:23 INFO [uvicorn.error] Finished server process [86289]
+2025-11-11 15:15:26 INFO [uvicorn.error] Started server process [86580]
+2025-11-11 15:15:26 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:15:26 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:15:27 INFO [uvicorn.error] Shutting down
+2025-11-11 15:15:27 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:15:27 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:15:27 INFO [uvicorn.error] Finished server process [86580]
+2025-11-11 15:15:29 INFO [uvicorn.error] Started server process [86629]
+2025-11-11 15:15:29 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:15:29 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:31:55 INFO [uvicorn.error] Shutting down
+2025-11-11 15:31:56 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:31:56 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:31:56 INFO [uvicorn.error] Finished server process [86629]
+2025-11-11 15:31:57 INFO [uvicorn.error] Started server process [99118]
+2025-11-11 15:31:57 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:31:57 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:32:39 INFO [uvicorn.error] Shutting down
+2025-11-11 15:32:39 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:32:39 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:32:39 INFO [uvicorn.error] Finished server process [99118]
+2025-11-11 15:32:40 INFO [uvicorn.error] Started server process [99839]
+2025-11-11 15:32:40 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:32:40 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:32:51 INFO [uvicorn.error] Shutting down
+2025-11-11 15:32:51 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:32:51 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:32:51 INFO [uvicorn.error] Finished server process [99839]
+2025-11-11 15:32:52 INFO [uvicorn.error] Started server process [99997]
+2025-11-11 15:32:52 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:32:52 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:33:32 INFO [uvicorn.error] Shutting down
+2025-11-11 15:33:32 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:33:32 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:33:32 INFO [uvicorn.error] Finished server process [99997]
+2025-11-11 15:33:34 INFO [uvicorn.error] Started server process [1180]
+2025-11-11 15:33:34 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:33:34 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:33:52 INFO [uvicorn.error] Shutting down
+2025-11-11 15:33:52 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:33:52 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:33:52 INFO [uvicorn.error] Finished server process [1180]
+2025-11-11 15:34:17 INFO [uvicorn.error] Started server process [1743]
+2025-11-11 15:34:17 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:34:17 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:34:19 INFO [uvicorn.error] Started server process [1760]
+2025-11-11 15:34:19 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:34:19 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:34:34 INFO [uvicorn.error] Shutting down
+2025-11-11 15:34:34 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:34:34 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:34:34 INFO [uvicorn.error] Finished server process [1760]
+2025-11-11 15:34:35 INFO [uvicorn.error] Started server process [2178]
+2025-11-11 15:34:35 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:34:35 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:34:40 INFO [uvicorn.error] Shutting down
+2025-11-11 15:34:40 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:34:40 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:34:40 INFO [uvicorn.error] Finished server process [2178]
+2025-11-11 15:34:41 INFO [uvicorn.error] Started server process [2266]
+2025-11-11 15:34:41 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:34:41 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:34:43 INFO [uvicorn.error] Shutting down
+2025-11-11 15:34:43 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:34:43 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:34:43 INFO [uvicorn.error] Finished server process [2266]
+2025-11-11 15:34:44 INFO [uvicorn.error] Started server process [2304]
+2025-11-11 15:34:44 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:34:44 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:34:51 INFO [uvicorn.access] 127.0.0.1:60689 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:34:51 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x108234590>, <app.models.task.Task object at 0x1081cde50>]
+2025-11-11 15:34:51 INFO [uvicorn.access] 127.0.0.1:60691 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:35:07 INFO [uvicorn.access] 127.0.0.1:60742 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:35:07 INFO [uvicorn.access] 127.0.0.1:60743 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 15:35:07 INFO [uvicorn.access] 127.0.0.1:60743 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 15:35:08 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x1081cf4d0>, <app.models.task.Task object at 0x10825d480>]
+2025-11-11 15:35:08 INFO [uvicorn.access] 127.0.0.1:60745 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:35:08 INFO [app.taskdetail] Returning task detail id=1 data=<app.models.task.Task object at 0x108146ea0>
+2025-11-11 15:35:08 INFO [app.taskdetail] Returning task detail id=1 data=<app.models.task.Task object at 0x10824d010>
+2025-11-11 15:35:08 INFO [uvicorn.access] 127.0.0.1:60747 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 15:35:08 INFO [uvicorn.access] 127.0.0.1:60742 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 15:35:10 INFO [uvicorn.access] 127.0.0.1:60742 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:35:10 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x108214d10>, <app.models.task.Task object at 0x108215040>]
+2025-11-11 15:35:10 INFO [uvicorn.access] 127.0.0.1:60743 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:35:17 INFO [uvicorn.access] 127.0.0.1:60795 - "GET /taskdetail?id=1 HTTP/1.1" 307
+2025-11-11 15:35:17 INFO [app.taskdetail] Returning task detail id=1 data=<app.models.task.Task object at 0x10822d350>
+2025-11-11 15:35:17 INFO [uvicorn.access] 127.0.0.1:60797 - "GET /taskdetail/?id=1 HTTP/1.1" 200
+2025-11-11 15:35:56 INFO [uvicorn.error] Shutting down
+2025-11-11 15:35:56 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:35:56 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:35:56 INFO [uvicorn.error] Finished server process [2304]
+2025-11-11 15:35:58 INFO [uvicorn.error] Started server process [3106]
+2025-11-11 15:35:58 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:35:58 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:36:07 INFO [uvicorn.error] Shutting down
+2025-11-11 15:36:07 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:36:07 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:36:07 INFO [uvicorn.error] Finished server process [3106]
+2025-11-11 15:36:08 INFO [uvicorn.error] Started server process [3246]
+2025-11-11 15:36:08 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:36:08 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:36:34 INFO [uvicorn.error] Shutting down
+2025-11-11 15:36:34 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:36:34 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:36:34 INFO [uvicorn.error] Finished server process [3246]
+2025-11-11 15:36:35 INFO [uvicorn.error] Started server process [3576]
+2025-11-11 15:36:35 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:36:35 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:36:48 INFO [uvicorn.error] Shutting down
+2025-11-11 15:36:48 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:36:48 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:36:48 INFO [uvicorn.error] Finished server process [3576]
+2025-11-11 15:36:49 INFO [uvicorn.error] Started server process [3739]
+2025-11-11 15:36:49 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:36:49 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:37:18 INFO [uvicorn.error] Shutting down
+2025-11-11 15:37:18 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:37:18 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:37:18 INFO [uvicorn.error] Finished server process [3739]
+2025-11-11 15:37:20 INFO [uvicorn.error] Started server process [4117]
+2025-11-11 15:37:20 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:37:20 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:37:30 INFO [uvicorn.error] Shutting down
+2025-11-11 15:37:30 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:37:30 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:37:30 INFO [uvicorn.error] Finished server process [4117]
+2025-11-11 15:37:31 INFO [uvicorn.error] Started server process [4252]
+2025-11-11 15:37:31 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:37:31 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:37:58 INFO [uvicorn.error] Shutting down
+2025-11-11 15:37:58 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:37:58 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:37:58 INFO [uvicorn.error] Finished server process [4252]
+2025-11-11 15:38:00 INFO [uvicorn.error] Started server process [4598]
+2025-11-11 15:38:00 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:38:00 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:38:46 INFO [uvicorn.error] Shutting down
+2025-11-11 15:38:46 INFO [uvicorn.error] Waiting for application shutdown.
+2025-11-11 15:38:46 INFO [uvicorn.error] Application shutdown complete.
+2025-11-11 15:38:46 INFO [uvicorn.error] Finished server process [4598]
+2025-11-11 15:38:53 INFO [uvicorn.error] Started server process [5760]
+2025-11-11 15:38:53 INFO [uvicorn.error] Waiting for application startup.
+2025-11-11 15:38:53 INFO [uvicorn.error] Application startup complete.
+2025-11-11 15:38:58 INFO [uvicorn.access] 127.0.0.1:62082 - "HEAD /health HTTP/1.1" 405
+2025-11-11 15:39:05 INFO [uvicorn.access] 127.0.0.1:62114 - "GET /health HTTP/1.1" 200
+2025-11-11 15:40:21 INFO [uvicorn.access] 127.0.0.1:62295 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:40:22 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x10ddfbe00>, <app.models.task.Task object at 0x10de8d950>]
+2025-11-11 15:40:22 INFO [uvicorn.access] 127.0.0.1:62297 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:40:26 INFO [uvicorn.access] 127.0.0.1:62325 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:40:26 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x10de8dd10>, <app.models.task.Task object at 0x10ddf3e10>]
+2025-11-11 15:40:26 INFO [uvicorn.access] 127.0.0.1:62327 - "GET /tasks/ HTTP/1.1" 200
+2025-11-11 15:40:26 INFO [uvicorn.access] 127.0.0.1:62325 - "GET /tasks HTTP/1.1" 307
+2025-11-11 15:40:26 INFO [app.tasks] Listing tasks count=2 data=[<app.models.task.Task object at 0x10df08180>, <app.models.task.Task object at 0x10de95250>]
+2025-11-11 15:40:26 INFO [uvicorn.access] 127.0.0.1:62327 - "GET /tasks/ HTTP/1.1" 200

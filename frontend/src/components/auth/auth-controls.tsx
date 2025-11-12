@@ -62,8 +62,15 @@ export function AuthControls() {
       setIsExchanging(true);
       try {
         const token = await resolveAccessToken(accessTokenOverride);
+        const endpoint = `${API_BASE}/sessions/privy`;
 
-        const response = await fetch(`${API_BASE}/sessions/privy`, {
+        console.debug("[auth-controls] Exchanging Privy session", {
+          endpoint,
+          hasOverride: Boolean(accessTokenOverride),
+          tokenPreview: token.slice(0, 6),
+        });
+
+        const response = await fetch(endpoint, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -72,20 +79,33 @@ export function AuthControls() {
           body: JSON.stringify({ token }),
         });
 
+        console.debug("[auth-controls] Exchange response", {
+          ok: response.ok,
+          status: response.status,
+          statusText: response.statusText,
+        });
+
         if (!response.ok) {
           let message = "会话同步失败，请稍后再试。";
           try {
             const body = await response.json();
+            console.warn("[auth-controls] Exchange error payload", body);
             if (body?.detail) {
               message = body.detail as string;
             }
           } catch (error) {
-            console.warn("Failed to parse error response", error);
+            console.warn(
+              "[auth-controls] Failed to parse exchange error response",
+              error
+            );
           }
           throw new Error(message);
         }
 
         setHasExchanged(true);
+      } catch (error) {
+        console.error("[auth-controls] Privy session exchange failed", error);
+        throw error;
       } finally {
         setIsExchanging(false);
       }

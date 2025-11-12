@@ -1,5 +1,6 @@
-from functools import lru_cache
 from datetime import datetime, timedelta, timezone
+from functools import lru_cache
+import logging
 from typing import Any, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Response, status
@@ -36,6 +37,7 @@ def get_privy_client() -> PrivyAPI:
 
 
 router = APIRouter(prefix="/sessions", tags=["sessions"])
+logger = logging.getLogger(__name__)
 
 
 @router.post(
@@ -55,16 +57,29 @@ def exchange_privy_token(
     payload. Extend as needed to enrich user metadata.
     """
 
+    logger.info(
+        "Privy session exchange requested",
+        extra={
+            "token_preview": payload.token[:6],
+            "token_length": len(payload.token),
+        },
+    )
+
     try:
         raw_claims = get_privy_client().users.verify_access_token(
             auth_token=payload.token
         )
     except AuthenticationError as exc:
+        logger.warning(
+            "Privy session exchange failed: authentication error",
+            exc_info=exc,
+        )
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid Privy access token",
         ) from exc
     except Exception as exc:  # pragma: no cover - defensive guard
+        logger.exception("Privy session exchange failed during token verification")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to verify Privy access token",
@@ -103,6 +118,16 @@ def exchange_privy_token(
         secure=not settings.debug,
         samesite="lax",
         max_age=int(SESSION_TTL.total_seconds()),
+    )
+
+    logger.info(
+        "Privy session exchange succeeded",
+        extra={
+            "user_id": user_id,
+            "session_id": session_id,
+            "app_id": app_id,
+            "session_record_id": str(session_record.id),
+        },
     )
 
     return PrivyExchangeResponse(

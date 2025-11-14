@@ -14,15 +14,35 @@ type Task = {
 };
 
 async function fetchTasks(): Promise<Task[]> {
-  const response = await fetch(`${API_BASE}/tasks`, {
+  const endpoint = `${API_BASE}/tasks`;
+  // eslint-disable-next-line no-console
+  console.log("[Axis] Fetching tasks from full URL:", endpoint);
+  // eslint-disable-next-line no-console
+  console.log("[Axis] API_BASE value:", API_BASE);
+  // eslint-disable-next-line no-console
+  console.log("[Axis] process.env.NEXT_PUBLIC_API_BASE:", process.env.NEXT_PUBLIC_API_BASE);
+  
+  const response = await fetch(endpoint, {
     cache: "no-store",
   });
+  
+  // eslint-disable-next-line no-console
+  console.log("[Axis] Fetch response status:", response.status, response.statusText);
+  // eslint-disable-next-line no-console
+  console.log("[Axis] Fetch response URL:", response.url);
 
   if (!response.ok) {
+    console.error(
+      "[Axis] Failed tasks fetch",
+      response.status,
+      response.statusText,
+    );
     throw new Error("无法获取任务列表");
   }
 
   const data = (await response.json()) as { tasks: Task[] };
+  // eslint-disable-next-line no-console
+  console.log("[Axis] Tasks fetch ok, count:", data.tasks.length);
   return data.tasks;
 }
 

@@ -26,27 +26,24 @@ type AdminOverviewResponse = {
 };
 
 async function fetchAdminOverview(): Promise<AdminOverviewResponse | null> {
-  const marker = "__AXIS_ADMIN_FETCH_LOGGED__";
-  if (typeof globalThis !== "undefined" && !(marker in globalThis)) {
-    Object.defineProperty(globalThis, marker, {
-      value: true,
-      enumerable: false,
-      configurable: false,
-      writable: false,
-    });
-    // eslint-disable-next-line no-console
-    console.log(
-      "[Axis] Admin database page using API base:",
-      `${API_BASE}/admin/database-overview`,
-    );
-  }
-
   try {
     const endpoint = `${API_BASE}/admin/database-overview`;
+    // eslint-disable-next-line no-console
+    console.log("[Axis] Fetching admin overview from full URL:", endpoint);
+    // eslint-disable-next-line no-console
+    console.log("[Axis] API_BASE value:", API_BASE);
+    // eslint-disable-next-line no-console
+    console.log("[Axis] process.env.NEXT_PUBLIC_API_BASE:", process.env.NEXT_PUBLIC_API_BASE);
+    
     const response = await fetch(endpoint, {
       cache: "no-store",
       credentials: "include",
     });
+    
+    // eslint-disable-next-line no-console
+    console.log("[Axis] Fetch response status:", response.status, response.statusText);
+    // eslint-disable-next-line no-console
+    console.log("[Axis] Fetch response URL:", response.url);
 
     if (!response.ok) {
       console.error(

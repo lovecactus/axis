@@ -22,28 +22,40 @@ async function fetchTasks(): Promise<Task[]> {
   // eslint-disable-next-line no-console
   console.log("[Axis] process.env.NEXT_PUBLIC_API_BASE:", process.env.NEXT_PUBLIC_API_BASE);
   
-  const response = await fetch(endpoint, {
-    cache: "no-store",
-  });
-  
-  // eslint-disable-next-line no-console
-  console.log("[Axis] Fetch response status:", response.status, response.statusText);
-  // eslint-disable-next-line no-console
-  console.log("[Axis] Fetch response URL:", response.url);
+  try {
+    const response = await fetch(endpoint, {
+      cache: "no-store",
+    });
+    
+    // eslint-disable-next-line no-console
+    console.log("[Axis] Fetch response status:", response.status, response.statusText);
+    // eslint-disable-next-line no-console
+    console.log("[Axis] Fetch response URL:", response.url);
 
-  if (!response.ok) {
-    console.error(
-      "[Axis] Failed tasks fetch",
-      response.status,
-      response.statusText,
-    );
-    throw new Error("无法获取任务列表");
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => "Unable to read error response");
+      console.error(
+        "[Axis] Failed tasks fetch",
+        response.status,
+        response.statusText,
+        "Error body:",
+        errorText,
+      );
+      throw new Error(`无法获取任务列表: ${response.status} ${response.statusText}`);
+    }
+
+    const data = (await response.json()) as { tasks: Task[] };
+    // eslint-disable-next-line no-console
+    console.log("[Axis] Tasks fetch ok, count:", data.tasks.length);
+    return data.tasks;
+  } catch (error) {
+    console.error("[Axis] Exception during tasks fetch:", error);
+    if (error instanceof Error) {
+      console.error("[Axis] Error message:", error.message);
+      console.error("[Axis] Error stack:", error.stack);
+    }
+    throw error;
   }
-
-  const data = (await response.json()) as { tasks: Task[] };
-  // eslint-disable-next-line no-console
-  console.log("[Axis] Tasks fetch ok, count:", data.tasks.length);
-  return data.tasks;
 }
 
 function mapDifficultyToStars(label: string): number {

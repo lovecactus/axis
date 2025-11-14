@@ -64,6 +64,11 @@ async function fetchAdminOverview(): Promise<AdminOverviewResponse | null> {
     return payload;
   } catch (error) {
     console.error("[Axis] Exception during admin overview fetch", error);
+    if (error instanceof Error) {
+      console.error("[Axis] Error message:", error.message);
+      console.error("[Axis] Error stack:", error.stack);
+      console.error("[Axis] Error name:", error.name);
+    }
     return null;
   }
 }

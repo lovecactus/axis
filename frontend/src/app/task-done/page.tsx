@@ -31,15 +31,46 @@ function clamp(value: number, min: number, max: number) {
 
 async function fetchTask(id: number): Promise<Task> {
   const params = new URLSearchParams({ id: String(id) });
-  const response = await fetch(`${API_BASE}/taskdetail?${params.toString()}`, {
-    cache: "no-store",
-  });
+  const endpoint = `${API_BASE}/taskdetail?${params.toString()}`;
+  // eslint-disable-next-line no-console
+  console.log("[Axis] Fetching task detail from full URL:", endpoint);
+  // eslint-disable-next-line no-console
+  console.log("[Axis] API_BASE value:", API_BASE);
+  
+  try {
+    const response = await fetch(endpoint, {
+      cache: "no-store",
+    });
+    
+    // eslint-disable-next-line no-console
+    console.log("[Axis] Fetch response status:", response.status, response.statusText);
+    // eslint-disable-next-line no-console
+    console.log("[Axis] Fetch response URL:", response.url);
 
-  if (!response.ok) {
-    throw new Error("无法获取任务详情");
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => "Unable to read error response");
+      console.error(
+        "[Axis] Failed task detail fetch",
+        response.status,
+        response.statusText,
+        "Error body:",
+        errorText,
+      );
+      throw new Error(`无法获取任务详情: ${response.status} ${response.statusText}`);
+    }
+
+    const data = (await response.json()) as Task;
+    // eslint-disable-next-line no-console
+    console.log("[Axis] Task detail fetch ok, task ID:", data.id);
+    return data;
+  } catch (error) {
+    console.error("[Axis] Exception during task detail fetch:", error);
+    if (error instanceof Error) {
+      console.error("[Axis] Error message:", error.message);
+      console.error("[Axis] Error stack:", error.stack);
+    }
+    throw error;
   }
-
-  return (await response.json()) as Task;
 }
 
 export default async function TaskDonePage({

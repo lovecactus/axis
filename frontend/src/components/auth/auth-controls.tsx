@@ -1,10 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePrivy } from "@privy-io/react-auth";
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
+import { API_BASE } from "@/lib/api-base";
 
 function formatDisplayName(user: ReturnType<typeof usePrivy>["user"]) {
   const email = user?.email?.address;
@@ -27,6 +26,8 @@ export function AuthControls() {
   const [isExchanging, setIsExchanging] = useState(false);
   const [hasExchanged, setHasExchanged] = useState(false);
   const [sessionError, setSessionError] = useState<string | null>(null);
+  const [retryAttempt, setRetryAttempt] = useState(0);
+  const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const disabled = useMemo(
     () => pending || isExchanging,
@@ -142,29 +143,61 @@ export function AuthControls() {
   };
 
   useEffect(() => {
+    if (retryTimerRef.current) {
+      clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = null;
+    }
+
     if (!ready) {
       return;
     }
 
     if (!authenticated) {
       setHasExchanged(false);
+      setRetryAttempt(0);
       return;
     }
 
-    if (!hasExchanged && !isExchanging) {
-      exchangeSession().catch((error) => {
-        const message =
-          error instanceof Error ? error.message : "会话同步失败，请重新登录。";
-        setSessionError(message);
-        console.error("Failed to synchronize Privy session", error);
-      });
+    if (hasExchanged || isExchanging) {
+      return;
     }
+
+    const baseDelay = 1000;
+    const maxDelay = 30_000;
+    const delay =
+      retryAttempt === 0
+        ? 0
+        : Math.min(maxDelay, baseDelay * 2 ** Math.max(0, retryAttempt - 1));
+
+    retryTimerRef.current = setTimeout(() => {
+      exchangeSession()
+        .then(() => {
+          setRetryAttempt(0);
+        })
+        .catch((error) => {
+          const message =
+            error instanceof Error
+              ? error.message
+              : "会话同步失败，请重新登录。";
+          setSessionError(message);
+          console.error("Failed to synchronize Privy session", error);
+          setRetryAttempt((attempt) => Math.min(attempt + 1, 8));
+        });
+    }, delay);
+
+    return () => {
+      if (retryTimerRef.current) {
+        clearTimeout(retryTimerRef.current);
+        retryTimerRef.current = null;
+      }
+    };
   }, [
     ready,
     authenticated,
     hasExchanged,
     isExchanging,
     exchangeSession,
+    retryAttempt,
   ]);
 
   if (!ready) {

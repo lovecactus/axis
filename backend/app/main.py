@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.core.logging_config import configure_logging
+from app.admin.router import router as admin_router
 from app.auth.router import router as auth_router
 from app.sessions.router import router as sessions_router
 from app.tasks.router import router as tasks_router
@@ -32,6 +33,7 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     app.include_router(auth_router)
+    app.include_router(admin_router)
     app.include_router(tasks_router)
     app.include_router(task_detail_router)
     app.include_router(sessions_router)

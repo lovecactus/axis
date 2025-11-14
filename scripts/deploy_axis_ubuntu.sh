@@ -119,6 +119,8 @@ sudo -u "${DEPLOY_USER}" bash -lc "if command -v yarn >/dev/null 2>&1; then yarn
 sudo -u "${DEPLOY_USER}" rm -rf "${DEPLOY_HOME}/.cache/yarn"
 sudo -u "${DEPLOY_USER}" yarn install
 if [[ ! -f "${FRONTEND_ENV}" ]]; then
+  # Note: NEXT_PUBLIC_API_BASE is used for client-side (browser) fetches.
+  # Server-side (SSR) fetches automatically use http://127.0.0.1:8000/api to avoid SSL issues.
 cat <<EOF > "${FRONTEND_ENV}"
 NEXT_PUBLIC_API_BASE=${FRONTEND_API_BASE}
 NEXT_PUBLIC_PRIVY_APP_ID=cmhu107y80098la0c0bzz57wa

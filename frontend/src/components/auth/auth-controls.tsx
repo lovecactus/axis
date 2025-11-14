@@ -65,8 +65,9 @@ export function AuthControls() {
         const token = await resolveAccessToken(accessTokenOverride);
         const endpoint = `${API_BASE}/sessions/privy`;
 
-        console.debug("[auth-controls] Exchanging Privy session", {
+        console.log("[auth-controls] Exchanging Privy session", {
           endpoint,
+          API_BASE,
           hasOverride: Boolean(accessTokenOverride),
           tokenPreview: token.slice(0, 6),
         });
@@ -80,10 +81,11 @@ export function AuthControls() {
           body: JSON.stringify({ token }),
         });
 
-        console.debug("[auth-controls] Exchange response", {
+        console.log("[auth-controls] Exchange response", {
           ok: response.ok,
           status: response.status,
           statusText: response.statusText,
+          url: response.url,
         });
 
         if (!response.ok) {
@@ -106,6 +108,18 @@ export function AuthControls() {
         setHasExchanged(true);
       } catch (error) {
         console.error("[auth-controls] Privy session exchange failed", error);
+        if (error instanceof Error) {
+          console.error("[auth-controls] Error name:", error.name);
+          console.error("[auth-controls] Error message:", error.message);
+          console.error("[auth-controls] Error stack:", error.stack);
+          
+          // Check for network/SSL errors
+          if (error.message === "Failed to fetch" || error.name === "TypeError") {
+            const message = "无法连接到服务器。请检查网络连接或证书设置。";
+            setSessionError(message);
+            throw new Error(message);
+          }
+        }
         throw error;
       } finally {
         setIsExchanging(false);

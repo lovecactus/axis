@@ -140,6 +140,7 @@ Comprehensive checklist for migrating and operating the Axis stack on Ubuntu 24.
   yarn build
    ```
    - Update `NEXT_PUBLIC_API_BASE` with your actual backend URL (use HTTPS in production).
+   - **Note**: `NEXT_PUBLIC_API_BASE` is used for **client-side** (browser) API fetches. Server-side (SSR) fetches automatically use `http://127.0.0.1:8000/api` to avoid self-signed SSL certificate issues. This is handled automatically by the frontend code.
    - Verify the build completes successfully before proceeding.
    - Clearing the Yarn cache prevents partial archives from prior runs from causing `ENOENT` errors during `yarn install`.
 
@@ -384,6 +385,15 @@ These steps are kept for reference if you prefer manual control. Otherwise, see 
 - **Environment vars missing**: verify `.env` files and systemd `EnvironmentFile` paths.
 - **TLS renewal failures**: check `sudo certbot renew --dry-run`, inspect `/var/log/letsencrypt/letsencrypt.log`.
 - **Out-of-date Node/Python**: rerun the install commands with newer NodeSource script or update the virtualenv.
+- **Frontend API calls failing / SSL certificate errors**: 
+  - The frontend code automatically uses `http://127.0.0.1:8000/api` for server-side (SSR) fetches to avoid self-signed certificate issues.
+  - Client-side (browser) fetches use `https://<SERVER_IP_OR_DOMAIN>/api` from `NEXT_PUBLIC_API_BASE`.
+  - If you see "Failed to fetch" errors in the browser console, check:
+    - Browser console for detailed error messages
+    - `journalctl -u axis-frontend -f` for server-side fetch logs
+    - `journalctl -u axis-backend -f` to see if requests are reaching the backend
+    - Verify `NEXT_PUBLIC_API_BASE` in `/var/axis/frontend/.env.production` is set correctly
+    - Ensure the backend is running and accessible at `http://127.0.0.1:8000` (for server-side) and `https://<SERVER_IP_OR_DOMAIN>/api` (for client-side)
 
 ---
 

@@ -1,5 +1,5 @@
 const DEFAULT_API_BASE = "http://localhost:8000";
-const SERVER_API_BASE = "http://127.0.0.1:8000/api";
+const SERVER_API_BASE = "http://localhost:8000/api";
 
 /**
  * Get the API base URL. On the server (SSR), use localhost to avoid SSL issues.

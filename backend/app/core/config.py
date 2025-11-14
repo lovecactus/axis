@@ -40,6 +40,16 @@ class Settings(BaseSettings):
         default=None, description="Privy client secret."
     )
 
+    cors_origins: list[str] = Field(
+        default_factory=lambda: [
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            "http://localhost:3001",
+            "http://127.0.0.1:3001",
+        ],
+        description="Allowed CORS origins (comma-separated or list).",
+    )
+
 
 @lru_cache
 def get_settings() -> Settings:

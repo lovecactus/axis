@@ -10,13 +10,17 @@ Comprehensive checklist for migrating and operating the Axis stack on Ubuntu 24.
 
 - **Fresh deployment (run from your workstation):**
   ```bash
-  scp -i <PATH_TO_PEM> scripts/deploy_axis_ubuntu.sh root@<SERVER_IP_OR_DOMAIN>:/root/deploy_axis_ubuntu.sh
+  ssh -i <PATH_TO_PEM> root@<SERVER_IP_OR_DOMAIN> 'mkdir -p /opt/axis-tools'
+  scp -i <PATH_TO_PEM> scripts/deploy_axis_ubuntu.sh root@<SERVER_IP_OR_DOMAIN>:/opt/axis-tools/deploy_axis_ubuntu.sh
   ssh -i <PATH_TO_PEM> root@<SERVER_IP_OR_DOMAIN> \
-    'chmod +x /root/deploy_axis_ubuntu.sh && /root/deploy_axis_ubuntu.sh https://<SERVER_IP_OR_DOMAIN>'
+    'chmod +x /opt/axis-tools/deploy_axis_ubuntu.sh && /opt/axis-tools/deploy_axis_ubuntu.sh https://<SERVER_IP_OR_DOMAIN>'
   ```
 - **Apply new commits / rebuild services (run from your workstation after pushing code):**
   ```bash
-  ssh -i <PATH_TO_PEM> root@<SERVER_IP_OR_DOMAIN> '/var/axis/scripts/update_axis.sh'
+  ssh -i <PATH_TO_PEM> root@<SERVER_IP_OR_DOMAIN> 'mkdir -p /opt/axis-tools'
+  scp -i <PATH_TO_PEM> scripts/update_axis.sh root@<SERVER_IP_OR_DOMAIN>:/opt/axis-tools/update_axis.sh
+  ssh -i <PATH_TO_PEM> root@<SERVER_IP_OR_DOMAIN> \
+    'chmod +x /opt/axis-tools/update_axis.sh && /opt/axis-tools/update_axis.sh'
   ```
 - **Tail logs (pick the service you care about):**
   ```bash
@@ -262,7 +266,7 @@ sudo systemctl status axis-backend axis-frontend
        ssl_prefer_server_ciphers on;
 
        location /api/ {
-           proxy_pass http://127.0.0.1:8000/;
+           proxy_pass http://127.0.0.1:8000;
            proxy_set_header Host $host;
            proxy_set_header X-Real-IP $remote_addr;
            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -369,7 +373,7 @@ disown
 
 ### Quick Refresh Script
 
-These steps are kept for reference if you prefer manual control. Otherwise, see **Section 0 – Automation Cheat Sheet** for the `scripts/update_axis.sh` helper that wraps them for you.
+These steps are kept for reference if you prefer manual control. Otherwise, see **Section 0 – Automation Cheat Sheet** for the `/opt/axis-tools/update_axis.sh` helper that wraps them for you.
 
 ---
 

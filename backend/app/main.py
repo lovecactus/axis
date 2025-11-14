@@ -12,6 +12,8 @@ from app.users.router import router as users_router
 
 configure_logging()
 
+API_PREFIX = "/api"
+
 
 def create_app() -> FastAPI:
     app = FastAPI(
@@ -32,12 +34,12 @@ def create_app() -> FastAPI:
     def health_check() -> dict[str, str]:
         return {"status": "ok"}
 
-    app.include_router(auth_router)
-    app.include_router(admin_router)
-    app.include_router(tasks_router)
-    app.include_router(task_detail_router)
-    app.include_router(sessions_router)
-    app.include_router(users_router)
+    app.include_router(auth_router, prefix=API_PREFIX)
+    app.include_router(admin_router, prefix=API_PREFIX)
+    app.include_router(tasks_router, prefix=API_PREFIX)
+    app.include_router(task_detail_router, prefix=API_PREFIX)
+    app.include_router(sessions_router, prefix=API_PREFIX)
+    app.include_router(users_router, prefix=API_PREFIX)
 
     return app
 

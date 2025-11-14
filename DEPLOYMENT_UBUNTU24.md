@@ -4,6 +4,29 @@ Comprehensive checklist for migrating and operating the Axis stack on Ubuntu 24.
 
 ---
 
+## 0. Automation Cheat Sheet
+
+> Replace `<PATH_TO_PEM>` with the path to your SSH key and `<SERVER_IP_OR_DOMAIN>` with your public hostname or IP.
+
+- **Fresh deployment (run from your workstation):**
+  ```bash
+  scp -i <PATH_TO_PEM> scripts/deploy_axis_ubuntu.sh root@<SERVER_IP_OR_DOMAIN>:/root/deploy_axis_ubuntu.sh
+  ssh -i <PATH_TO_PEM> root@<SERVER_IP_OR_DOMAIN> \
+    'chmod +x /root/deploy_axis_ubuntu.sh && /root/deploy_axis_ubuntu.sh https://<SERVER_IP_OR_DOMAIN>'
+  ```
+- **Apply new commits / rebuild services (run from your workstation after pushing code):**
+  ```bash
+  ssh -i <PATH_TO_PEM> root@<SERVER_IP_OR_DOMAIN> '/var/axis/scripts/update_axis.sh'
+  ```
+- **Tail logs (pick the service you care about):**
+  ```bash
+  ssh -i <PATH_TO_PEM> root@<SERVER_IP_OR_DOMAIN> 'journalctl -u axis-backend -f'
+  ssh -i <PATH_TO_PEM> root@<SERVER_IP_OR_DOMAIN> 'journalctl -u axis-frontend -f'
+  ```
+- Both scripts assume the repo lives at `/var/axis` on the server. Adjust paths if your layout differs.
+
+---
+
 ## 1. Server Baseline
 
 > **All shell commands assume you are already logged into the Ubuntu server via SSH. Run them directly in that session (no need to wrap commands with an extra `ssh` call).**
@@ -107,7 +130,7 @@ Comprehensive checklist for migrating and operating the Axis stack on Ubuntu 24.
   rm -f package-lock.json          # avoid mixing npm/yarn lockfiles
   yarn install
   cat <<'EOF' > /var/axis/frontend/.env.production
-  NEXT_PUBLIC_API_BASE=https://YOUR_PUBLIC_BACKEND_URL
+  NEXT_PUBLIC_API_BASE=https://YOUR_PUBLIC_BACKEND_URL/api
   NEXT_PUBLIC_PRIVY_APP_ID=cmhu107y80098la0c0bzz57wa
   EOF
   yarn build
@@ -344,6 +367,10 @@ disown
   sudo apt update && sudo apt upgrade -y
   ```
 
+### Quick Refresh Script
+
+These steps are kept for reference if you prefer manual control. Otherwise, see **Section 0 – Automation Cheat Sheet** for the `scripts/update_axis.sh` helper that wraps them for you.
+
 ---
 
 ## 10. Troubleshooting Checklist
@@ -357,13 +384,3 @@ disown
 ---
 
 Keep this checklist in version control so future deployments stay consistent. Update steps whenever infrastructure, dependencies, or paths change.
-
-### Automated Script Option
-
-- For repeatable setups, use `scripts/deploy_axis_ubuntu.sh`:
-  ```bash
-  sudo bash scripts/deploy_axis_ubuntu.sh https://YOUR_PUBLIC_BACKEND_URL
-  ```
-- Update environment files and secrets after the script completes.
-
-

@@ -38,6 +38,8 @@ LOG_DIR=${BACKEND_DIR}/logs
 POSTGRES_DB=axis
 POSTGRES_USER=axis
 POSTGRES_PASSWORD=axis
+PUBLIC_BACKEND_URL=${PUBLIC_BACKEND_URL%/}
+FRONTEND_API_BASE=${PUBLIC_BACKEND_URL}/api
 
 echo "=== Updating system packages ==="
 apt update
@@ -118,7 +120,7 @@ sudo -u "${DEPLOY_USER}" rm -rf "${DEPLOY_HOME}/.cache/yarn"
 sudo -u "${DEPLOY_USER}" yarn install
 if [[ ! -f "${FRONTEND_ENV}" ]]; then
 cat <<EOF > "${FRONTEND_ENV}"
-NEXT_PUBLIC_API_BASE=${PUBLIC_BACKEND_URL}
+NEXT_PUBLIC_API_BASE=${FRONTEND_API_BASE}
 NEXT_PUBLIC_PRIVY_APP_ID=cmhu107y80098la0c0bzz57wa
 EOF
   chown "${DEPLOY_USER}:${DEPLOY_USER}" "${FRONTEND_ENV}"

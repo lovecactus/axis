@@ -26,20 +26,47 @@ type AdminOverviewResponse = {
 };
 
 async function fetchAdminOverview(): Promise<AdminOverviewResponse | null> {
+  const marker = "__AXIS_ADMIN_FETCH_LOGGED__";
+  if (typeof globalThis !== "undefined" && !(marker in globalThis)) {
+    Object.defineProperty(globalThis, marker, {
+      value: true,
+      enumerable: false,
+      configurable: false,
+      writable: false,
+    });
+    // eslint-disable-next-line no-console
+    console.log(
+      "[Axis] Admin database page using API base:",
+      `${API_BASE}/admin/database-overview`,
+    );
+  }
+
   try {
-    const response = await fetch(`${API_BASE}/admin/database-overview`, {
+    const endpoint = `${API_BASE}/admin/database-overview`;
+    const response = await fetch(endpoint, {
       cache: "no-store",
       credentials: "include",
     });
 
     if (!response.ok) {
-      console.error("Failed to load admin overview", response.statusText);
+      console.error(
+        "[Axis] Failed admin overview fetch",
+        response.status,
+        response.statusText,
+      );
       return null;
     }
 
-    return (await response.json()) as AdminOverviewResponse;
+    const payload = (await response.json()) as AdminOverviewResponse;
+    // eslint-disable-next-line no-console
+    console.log(
+      "[Axis] Admin overview fetch ok users=%d tasks=%d",
+      payload.users.length,
+      payload.tasks.length,
+    );
+    return payload;
   } catch (error) {
-    console.error("Failed to fetch admin overview", error);
+    console.error("[Axis] Exception during admin overview fetch", error);
     return null;
   }
 }

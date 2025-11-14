@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { API_BASE } from "@/lib/api-base";
+import { MuJoCoViewerWrapper } from "@/components/mujoco-viewer-wrapper";
 
 type Task = {
   id: number;
@@ -118,36 +119,26 @@ export default async function TaskDetailPage({
         <div className="grid gap-6 rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 md:grid-cols-[260px_1fr]">
           <div className="flex flex-col items-start gap-4">
             <div className="flex w-full items-center justify-center rounded-lg border border-zinc-200 bg-gradient-to-br from-zinc-100 via-white to-zinc-50 p-4 shadow-sm dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-900">
-              <svg
-                aria-hidden="true"
-                className="h-24 w-full max-w-[220px] text-zinc-400"
-                viewBox="0 0 90 50"
-                fill="none"
-              >
-                <rect
-                  x="6"
-                  y="6"
-                  width="28"
-                  height="28"
-                  fill="#cfe3ff"
-                  stroke="#9fb6dd"
-                />
-                <rect
-                  x="54"
-                  y="20"
-                  width="20"
-                  height="16"
-                  fill="#ffdede"
-                  stroke="#d6a3a3"
-                />
-                <circle
-                  cx="42"
-                  cy="28"
-                  r="8"
-                  fill="#e0f7e8"
-                  stroke="#b7dec1"
-                />
-              </svg>
+              <MuJoCoViewerWrapper
+                width={260}
+                height={260}
+                modelXml={`
+<mujoco>
+  <worldbody>
+    <light pos="0 0 3" dir="0 0 -1"/>
+    <geom type="plane" size="1 1 0.1" rgba="0.9 0.9 0.9 1"/>
+    <body pos="0 0 0.5">
+      <geom type="box" size="0.15 0.15 0.15" rgba="0.8 0.3 0.3 1" mass="1"/>
+      <joint type="free"/>
+    </body>
+    <body pos="0.3 0 0.3">
+      <geom type="sphere" size="0.1" rgba="0.3 0.8 0.3 1" mass="0.5"/>
+      <joint type="free"/>
+    </body>
+  </worldbody>
+</mujoco>
+                `}
+              />
             </div>
 
             <div className="space-y-3 text-sm text-zinc-600 dark:text-zinc-300">

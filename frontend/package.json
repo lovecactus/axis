@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "@privy-io/react-auth": "^3.6.1",
+    "@types/three": "^0.181.0",
+    "mujoco-js": "^0.0.7",
     "next": "16.0.1",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "three": "^0.181.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

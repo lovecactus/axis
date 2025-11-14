@@ -1,0 +1,31 @@
+<mujoco>
+  <option timestep="0.01" gravity="0 0 -9.81"/>
+  
+  <worldbody>
+    <!-- Lighting -->
+    <light pos="2 2 3" dir="-1 -1 -1" diffuse="1 1 1"/>
+    <light pos="-2 2 3" dir="1 -1 -1" diffuse="0.5 0.5 0.5"/>
+    
+    <!-- Ground plane -->
+    <geom type="plane" size="2 2 0.1" rgba="0.8 0.8 0.9 1" friction="1 0.005 0.0001"/>
+    
+    <!-- Main object -->
+    <body pos="0 0 0.5" name="main_object">
+      <geom type="box" size="0.2 0.2 0.2" rgba="0.8 0.3 0.3 1" mass="1" friction="1 0.005 0.0001"/>
+      <joint type="free"/>
+    </body>
+    
+    <!-- Secondary object -->
+    <body pos="0.4 0 0.3" name="secondary_object">
+      <geom type="sphere" size="0.12" rgba="0.3 0.6 0.8 1" mass="0.8" friction="1 0.005 0.0001"/>
+      <joint type="free"/>
+    </body>
+    
+    <!-- Interactive element -->
+    <body pos="-0.3 0 0.4" name="interactive">
+      <geom type="cylinder" size="0.08 0.15" rgba="0.9 0.7 0.2 1" mass="0.5" friction="1 0.005 0.0001"/>
+      <joint type="free"/>
+    </body>
+  </worldbody>
+</mujoco>
+

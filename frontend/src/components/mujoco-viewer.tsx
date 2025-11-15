@@ -4,29 +4,83 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-// Dynamic import for mujoco-js to avoid SSR issues
-// This must only be called client-side, never during SSR or build time
+// Declare global type for mujoco module loaded via script tag
+declare global {
+  interface Window {
+    load_mujoco?: () => Promise<any>;
+  }
+}
+
+// Load MuJoCo module using script tag (bypasses webpack completely)
+// This is the working strategy from mujoco-test page
 async function loadMujoco() {
   if (typeof window === "undefined") {
     throw new Error("MuJoCo can only be loaded in the browser");
   }
   
+  // Strategy 1: Load via script tag (completely bypasses webpack)
+  const loadViaScript = (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      // Check if already loaded
+      if (window.load_mujoco) {
+        resolve(window.load_mujoco);
+        return;
+      }
+      
+      // Remove any existing script
+      const existingScript = document.getElementById("mujoco-wasm-script");
+      if (existingScript) {
+        existingScript.remove();
+      }
+      
+      // Create script tag
+      const script = document.createElement("script");
+      script.id = "mujoco-wasm-script";
+      script.type = "module";
+      script.src = "/mujoco-js/dist/mujoco_wasm.js";
+      
+      script.onload = () => {
+        // Import the module after script loads (it should be cached)
+        setTimeout(async () => {
+          try {
+            const importModule = new Function(
+              'return import("/mujoco-js/dist/mujoco_wasm.js")'
+            ) as () => Promise<any>;
+            
+            const module = await importModule();
+            const loader = module.default || module;
+            window.load_mujoco = loader;
+            resolve(loader);
+          } catch (importError: any) {
+            reject(importError);
+          }
+        }, 100);
+      };
+      
+      script.onerror = () => {
+        reject(new Error("Failed to load MuJoCo script"));
+      };
+      
+      document.head.appendChild(script);
+    });
+  };
+  
   try {
-    // Use dynamic import that only happens at runtime
-    // The path must match exactly what's in node_modules
-    const mujocoModule = await import(
-      /* webpackIgnore: true */
-      "mujoco-js/dist/mujoco_wasm.js"
-    );
+    const load_mujoco = await loadViaScript();
     
-    const load_mujoco = mujocoModule.default || mujocoModule;
     if (!load_mujoco || typeof load_mujoco !== "function") {
-      throw new Error("MuJoCo loader function not found in module");
+      throw new Error("MuJoCo loader is not a function");
     }
     
-    return await load_mujoco();
+    const mujocoInstance = await load_mujoco();
+    
+    if (!mujocoInstance) {
+      throw new Error("MuJoCo instance is null or undefined");
+    }
+    
+    return mujocoInstance;
   } catch (error) {
-    console.error("Failed to load MuJoCo module:", error);
+    console.error("[MuJoCo] Failed to load MuJoCo module:", error);
     throw error;
   }
 }
@@ -50,6 +104,7 @@ export function MuJoCoViewer({
 }: MuJoCoViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const controlsRef = useRef<OrbitControls | null>(null);
   const animationFrameRef = useRef<number | null>(null);
@@ -61,17 +116,41 @@ export function MuJoCoViewer({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const mujocoTimeRef = useRef<number>(0);
+  const initAttemptedRef = useRef(false);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || initAttemptedRef.current) return;
+    initAttemptedRef.current = true;
 
     let mounted = true;
 
     async function init() {
+      console.log("[MuJoCo Viewer] Starting initialization...");
+      
       try {
+        // Add timeout to detect hanging
+        const timeoutId = setTimeout(() => {
+          if (mounted && isLoading) {
+            console.warn("[MuJoCo Viewer] Loading is taking longer than expected...");
+            setError("加载超时，请刷新页面重试");
+          }
+        }, 10000); // 10 second timeout
+
         // Load MuJoCo module
+        console.log("[MuJoCo Viewer] Loading MuJoCo module...");
         const mujoco = await loadMujoco();
-        if (!mounted || !mujoco) return;
+        clearTimeout(timeoutId);
+        
+        if (!mounted) {
+          console.log("[MuJoCo Viewer] Component unmounted during loading");
+          return;
+        }
+        
+        if (!mujoco) {
+          throw new Error("MuJoCo module loaded but instance is null");
+        }
+        
+        console.log("[MuJoCo Viewer] MuJoCo module loaded successfully");
 
         mujocoRef.current = mujoco;
 
@@ -129,6 +208,7 @@ export function MuJoCoViewer({
         );
         camera.position.set(2, 2, 2);
         camera.lookAt(0, 0, 0);
+        cameraRef.current = camera;
 
         // Renderer
         const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -137,6 +217,8 @@ export function MuJoCoViewer({
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         rendererRef.current = renderer;
 
+        // KEY FIX: Append directly like test page does - don't clear innerHTML
+        // The container should only contain the canvas, no loading/error messages
         if (containerRef.current) {
           containerRef.current.appendChild(renderer.domElement);
         }
@@ -270,7 +352,7 @@ export function MuJoCoViewer({
 
         // Animation loop
         function animate(timeMS: number) {
-          if (!mounted || !sceneRef.current || !rendererRef.current) return;
+          if (!mounted || !sceneRef.current || !rendererRef.current || !cameraRef.current) return;
 
           controls.update();
 
@@ -297,7 +379,7 @@ export function MuJoCoViewer({
             }
           }
 
-          renderer.render(scene, camera);
+          rendererRef.current.render(sceneRef.current, cameraRef.current);
           animationFrameRef.current = requestAnimationFrame(animate);
         }
 
@@ -305,22 +387,53 @@ export function MuJoCoViewer({
         animate(performance.now());
 
         setIsLoading(false);
+        console.log("[MuJoCo Viewer] Initialization complete");
       } catch (err) {
-        console.error("MuJoCo initialization error:", err);
-        setError(err instanceof Error ? err.message : "Failed to load MuJoCo");
+        console.error("[MuJoCo Viewer] Initialization error:", err);
+        const errorMessage = err instanceof Error 
+          ? err.message 
+          : typeof err === "string"
+          ? err
+          : "Failed to load MuJoCo";
+        setError(errorMessage);
         setIsLoading(false);
+        
+        // Log more details for debugging
+        if (err instanceof Error) {
+          console.error("[MuJoCo Viewer] Error stack:", err.stack);
+        }
+        console.error("[MuJoCo Viewer] Full error object:", err);
       }
     }
 
-    init();
+    init().catch((err) => {
+      console.error("[MuJoCo Viewer] Unhandled error in init:", err);
+      if (mounted) {
+        setError(`初始化失败: ${err instanceof Error ? err.message : String(err)}`);
+        setIsLoading(false);
+      }
+    });
 
     return () => {
       mounted = false;
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
-      if (rendererRef.current && containerRef.current && containerRef.current.contains(rendererRef.current.domElement)) {
-        containerRef.current.removeChild(rendererRef.current.domElement);
+      // More defensive cleanup - check if element exists and is actually a child before removing
+      if (rendererRef.current && containerRef.current && rendererRef.current.domElement) {
+        try {
+          const domElement = rendererRef.current.domElement;
+          // Check if the element is still in the DOM and is a child of container
+          if (domElement.parentNode === containerRef.current) {
+            containerRef.current.removeChild(domElement);
+          } else if (domElement.parentNode) {
+            // Element exists but is in a different parent - remove from its current parent
+            domElement.parentNode.removeChild(domElement);
+          }
+        } catch (error) {
+          // Silently ignore removeChild errors - element may have already been removed
+          console.warn("[MuJoCo Viewer] Cleanup warning:", error);
+        }
       }
       if (rendererRef.current) {
         rendererRef.current.dispose();
@@ -335,34 +448,18 @@ export function MuJoCoViewer({
     };
   }, [modelUrl, modelXml, width, height, paused]);
 
-  if (error) {
-    return (
-      <div
-        className={`flex items-center justify-center rounded-lg border border-red-200 bg-red-50 p-4 text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400 ${className}`}
-      >
-        <p className="text-sm">Error: {error}</p>
-      </div>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <div
-        className={`flex items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-700 dark:bg-zinc-900 ${className}`}
-      >
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          加载模拟中...
-        </p>
-      </div>
-    );
-  }
-
+  // KEY FIX: Return empty container like test page - no conditional children
+  // Loading/error should be shown OUTSIDE the container, not inside
+  // This matches the test page structure where canvasContainerRef points to an empty div
   return (
     <div
       ref={containerRef}
       className={`rounded-lg border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 ${className}`}
       style={{ width, height }}
-    />
+    >
+      {/* Container is kept empty - canvas will be appended directly here */}
+      {/* Don't put loading/error messages here as they cause DOM structure issues */}
+    </div>
   );
 }
 

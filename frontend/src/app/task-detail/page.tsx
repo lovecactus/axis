@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { API_BASE } from "@/lib/api-base";
-import { MuJoCoViewerWrapper } from "@/components/mujoco-viewer-wrapper";
+import { MuJoCoViewer } from "@/components/mujoco-viewer";
 
 type Task = {
   id: number;
@@ -98,7 +98,7 @@ export default async function TaskDetailPage({
 
   return (
     <div className="min-h-screen bg-zinc-100 py-12 font-sans text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4">
         <header className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="text-sm text-zinc-500 dark:text-zinc-400">
@@ -116,12 +116,13 @@ export default async function TaskDetailPage({
           </Link>
         </header>
 
-        <div className="grid gap-6 rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 md:grid-cols-[260px_1fr]">
+        <div className="grid gap-6 rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 md:grid-cols-[520px_1fr]">
           <div className="flex flex-col items-start gap-4">
             <div className="flex w-full items-center justify-center rounded-lg border border-zinc-200 bg-gradient-to-br from-zinc-100 via-white to-zinc-50 p-4 shadow-sm dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-900">
-              <MuJoCoViewerWrapper
-                width={260}
-                height={260}
+              {/* Using MuJoCoViewer directly (not wrapper) - this is the working version */}
+              <MuJoCoViewer
+                width={540}
+                height={520}
                 modelXml={`
 <mujoco>
   <worldbody>
@@ -201,4 +202,3 @@ export default async function TaskDetailPage({
     </div>
   );
 }
-

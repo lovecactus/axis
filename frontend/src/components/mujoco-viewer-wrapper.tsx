@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 // Lazy load MuJoCo viewer with SSR disabled to avoid WASM loading issues
@@ -27,6 +28,26 @@ interface MuJoCoViewerWrapperProps {
 }
 
 export function MuJoCoViewerWrapper(props: MuJoCoViewerWrapperProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Don't render anything on the server to avoid hydration mismatch
+  if (!isMounted) {
+    return (
+      <div
+        className="flex h-[260px] w-[260px] items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900"
+        style={{ width: props.width, height: props.height }}
+      >
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          加载模拟中...
+        </p>
+      </div>
+    );
+  }
+
   return <MuJoCoViewer {...props} />;
 }
 

@@ -26,6 +26,9 @@ fi
 # Allow git to operate when directory ownership differs (common with sudo).
 sudo -u "${DEPLOY_USER}" git config --global --add safe.directory "${PROJECT_ROOT}" >/dev/null 2>&1 || true
 
+# Ensure .git directory has correct ownership for git operations
+chown -R "${DEPLOY_USER}:${DEPLOY_USER}" "${PROJECT_ROOT}/.git" 2>/dev/null || true
+
 log "Pulling latest git changes"
 cd "${PROJECT_ROOT}"
 # Discard any local changes to yarn.lock that might conflict

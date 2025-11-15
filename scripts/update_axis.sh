@@ -9,6 +9,7 @@ set -euo pipefail
 PROJECT_ROOT=/var/axis
 BACKEND_DIR=${PROJECT_ROOT}/backend
 FRONTEND_DIR=${PROJECT_ROOT}/frontend
+DEPLOY_USER=${SUDO_USER:-ubuntu}
 
 GREEN='\033[0;32m'
 NC='\033[0m'
@@ -23,42 +24,25 @@ if [[ "$(id -u)" -ne 0 ]]; then
 fi
 
 # Allow git to operate when directory ownership differs (common with sudo).
-git config --global --add safe.directory "${PROJECT_ROOT}" >/dev/null 2>&1 || true
+sudo -u "${DEPLOY_USER}" git config --global --add safe.directory "${PROJECT_ROOT}" >/dev/null 2>&1 || true
 
 log "Pulling latest git changes"
 cd "${PROJECT_ROOT}"
-git pull
+# Discard any local changes to yarn.lock that might conflict
+sudo -u "${DEPLOY_USER}" git checkout -- frontend/yarn.lock 2>/dev/null || true
+sudo -u "${DEPLOY_USER}" git pull
 
 if [[ -d "${BACKEND_DIR}" ]]; then
   log "Refreshing backend dependencies"
-  cd "${BACKEND_DIR}"
-  if [[ -f ".venv/bin/activate" ]]; then
-    source .venv/bin/activate
-  else
-    echo "Backend virtualenv not found at ${BACKEND_DIR}/.venv"
-    exit 1
-  fi
-  if [[ -f "requirements.txt" ]]; then
-    pip install -r requirements.txt
-  fi
+  sudo -u "${DEPLOY_USER}" bash -lc "cd '${BACKEND_DIR}' && source .venv/bin/activate && pip install -r requirements.txt"
 
-  if command -v alembic >/dev/null 2>&1; then
-    log "Applying database migrations"
-    alembic upgrade head
-  else
-    echo "Alembic not found in virtualenv; skipping migrations."
-  fi
+  log "Applying database migrations"
+  sudo -u "${DEPLOY_USER}" bash -lc "cd '${BACKEND_DIR}' && source .venv/bin/activate && alembic upgrade head"
 fi
 
 if [[ -d "${FRONTEND_DIR}" ]]; then
   log "Rebuilding frontend"
-  cd "${FRONTEND_DIR}"
-  if [[ -f "package.json" ]]; then
-    yarn install --frozen-lockfile || yarn install
-    yarn build
-  else
-    echo "package.json not found in ${FRONTEND_DIR}; skipping frontend build."
-  fi
+  sudo -u "${DEPLOY_USER}" bash -lc "cd '${FRONTEND_DIR}' && yarn install && yarn build"
 fi
 
 log "Restarting services"

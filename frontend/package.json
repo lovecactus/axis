@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "copy-mujoco": "mkdir -p public/mujoco-js/dist && cp -r node_modules/mujoco-js/dist/* public/mujoco-js/dist/",
+    "postinstall": "yarn copy-mujoco",
     "dev": "next dev --webpack",
     "dev:turbo": "next dev",
-    "build": "next build",
+    "build": "yarn copy-mujoco && next build",
     "start": "next start",
     "lint": "eslint"
   },

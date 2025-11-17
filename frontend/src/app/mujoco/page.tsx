@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-import { loadMujoco, getPos, getQuat } from "@/lib/mujoco-utils";
+import { loadMujoco, getPos, getQuat, HUMAN_MODEL_XML } from "@/lib/mujoco-utils";
 
 // RESTORED: Original working implementation that renders directly into canvasContainerRef
 // This was working before refactoring to use the MuJoCoViewer component
@@ -125,73 +125,11 @@ export default function MuJoCoTestPage() {
         mujoco.FS.mount(mujoco.MEMFS, { root: "." }, "/working");
         addLog("✓ Mounted MEMFS to /working");
 
-        // Step 3: Create model XML - Basic Human Model
-        addLog("Step 4: Creating human model XML...");
+        // Step 3: Use shared human model XML
+        addLog("Step 4: Loading shared human model XML...");
         setStatus("Creating human simulation model...");
 
-        const modelXml = `
-<mujoco>
-  <option timestep="0.01" gravity="0 0 -9.81"/>
-  <worldbody>
-    <light pos="0 0 3" dir="0 0 -1"/>
-    <geom type="plane" size="2 2 0.1" rgba="0.15 0.15 0.15 1"/>
-    
-    <!-- Simple Human Model - Horizontal and Above Ground -->
-    <!-- Rotated 90 degrees around X axis to lay flat, positioned above ground -->
-    <body name="torso" pos="0 0 0.35" quat="0.7071 0.7071 0 0">
-      <joint name="torso_joint" type="free"/>
-      <geom type="box" size="0.15 0.2 0.3" rgba="0.8 0.6 0.4 1" mass="10"/>
-      
-      <!-- Head -->
-      <body name="head" pos="0 0 0.4">
-        <joint name="head_joint" type="hinge" axis="0 1 0"/>
-        <geom type="sphere" size="0.12" rgba="0.9 0.8 0.7 1" mass="2"/>
-      </body>
-      
-      <!-- Left Arm -->
-      <body name="left_arm" pos="-0.2 0 0.2">
-        <joint name="left_arm_joint" type="hinge" axis="1 0 0"/>
-        <geom type="cylinder" size="0.05 0.25" rgba="0.8 0.6 0.4 1" mass="1.5"/>
-      </body>
-      
-      <!-- Right Arm -->
-      <body name="right_arm" pos="0.2 0 0.2">
-        <joint name="right_arm_joint" type="hinge" axis="1 0 0"/>
-        <geom type="cylinder" size="0.05 0.25" rgba="0.8 0.6 0.4 1" mass="1.5"/>
-      </body>
-      
-      <!-- Left Leg -->
-      <body name="left_leg" pos="-0.08 0 -0.3">
-        <joint name="left_leg_joint" type="hinge" axis="1 0 0"/>
-        <geom type="cylinder" size="0.06 0.4" rgba="0.3 0.3 0.6 1" mass="3"/>
-      </body>
-      
-      <!-- Right Leg -->
-      <body name="right_leg" pos="0.08 0 -0.3">
-        <joint name="right_leg_joint" type="hinge" axis="1 0 0"/>
-        <geom type="cylinder" size="0.06 0.4" rgba="0.3 0.3 0.6 1" mass="3"/>
-      </body>
-    </body>
-  </worldbody>
-  
-  <!-- Actuators: Motors that drive the joints -->
-  <actuator>
-    <!-- Head motor: controls head rotation -->
-    <motor name="head_motor" joint="head_joint" gear="10" ctrllimited="true" ctrlrange="-1 1"/>
-    
-    <!-- Left arm motor: controls left arm swing -->
-    <motor name="left_arm_motor" joint="left_arm_joint" gear="20" ctrllimited="true" ctrlrange="-1 1"/>
-    
-    <!-- Right arm motor: controls right arm swing -->
-    <motor name="right_arm_motor" joint="right_arm_joint" gear="20" ctrllimited="true" ctrlrange="-1 1"/>
-    
-    <!-- Left leg motor: controls left leg movement -->
-    <motor name="left_leg_motor" joint="left_leg_joint" gear="30" ctrllimited="true" ctrlrange="-1 1"/>
-    
-    <!-- Right leg motor: controls right leg movement -->
-    <motor name="right_leg_motor" joint="right_leg_joint" gear="30" ctrllimited="true" ctrlrange="-1 1"/>
-  </actuator>
-</mujoco>`;
+        const modelXml = HUMAN_MODEL_XML;
 
         mujoco.FS.writeFile("/working/model.xml", modelXml);
         addLog("✓ Human model XML written to /working/model.xml");
@@ -245,12 +183,15 @@ export default function MuJoCoTestPage() {
       scene.background = new THREE.Color(0xf5f5f5);
       sceneRef.current = scene;
 
-      // Camera - adjusted for horizontal human model
+      // Camera - adjusted for vertical human model, higher position
+      // Reference: mujoco_wasm uses camera.position.set(2.0, 1.7, 1.7) and target.set(0, 0.7, 0)
       const width = 800;
       const height = 600;
       const camera = new THREE.PerspectiveCamera(45, width / height, 0.001, 100);
-      camera.position.set(3, 2, 0.5);
-      camera.lookAt(0, 0, 0.35);
+      // Higher position than reference (2.0, 1.7, 1.7) but maintaining good viewing angle
+      // Model is at Three.js Y=0.7 (from MuJoCo Z=0.7 via getPos conversion)
+      camera.position.set(3, 3, 3);  // Higher vertical position (Y=3 in Three.js)
+      camera.lookAt(0, 0.7, 0);  // Look at model center (torso at Three.js Y=0.7)
 
       // Renderer - KEY DIFFERENCE: Directly appends to canvasContainerRef
       const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -262,9 +203,10 @@ export default function MuJoCoTestPage() {
       // DIRECTLY append to canvasContainerRef - no wrapper div
       canvasContainerRef.current.appendChild(renderer.domElement);
 
-      // Controls - centered on horizontal human model
+      // Controls - centered on vertical human model
       const controls = new OrbitControls(camera, renderer.domElement);
-      controls.target.set(0, 0, 0.35); // Center on horizontal human torso above ground
+      // Model is at MuJoCo Z=0.7, which converts to Three.js Y=0.7 via getPos: (X, Y, Z) → (X, Z, -Y)
+      controls.target.set(0, 0.7, 0); // Center on vertical human torso (model center)
       controls.enableDamping = true;
       controls.dampingFactor = 0.1;
       controlsRef.current = controls;
@@ -422,17 +364,41 @@ export default function MuJoCoTestPage() {
                 data.ctrl[0] = 0;
               }
               
-              // Left Arm: A (forward)
-              data.ctrl[1] = keys.has("a") ? ctrlValue : 0; // left_arm_motor
+              // Left Arm: A (forward) / Z (backward)
+              if (keys.has("a")) {
+                data.ctrl[1] = ctrlValue; // left_arm_motor forward
+              } else if (keys.has("z")) {
+                data.ctrl[1] = -ctrlValue; // left_arm_motor backward
+              } else {
+                data.ctrl[1] = 0;
+              }
               
-              // Right Arm: D (forward)
-              data.ctrl[2] = keys.has("d") ? ctrlValue : 0; // right_arm_motor
+              // Right Arm: D (forward) / X (backward)
+              if (keys.has("d")) {
+                data.ctrl[2] = ctrlValue; // right_arm_motor forward
+              } else if (keys.has("x")) {
+                data.ctrl[2] = -ctrlValue; // right_arm_motor backward
+              } else {
+                data.ctrl[2] = 0;
+              }
               
-              // Left Leg: W (forward)
-              data.ctrl[3] = keys.has("w") ? ctrlValue : 0; // left_leg_motor
+              // Left Leg: W (forward) / Shift+W or R (backward)
+              if (keys.has("w")) {
+                data.ctrl[3] = ctrlValue; // left_leg_motor forward
+              } else if (keys.has("r")) {
+                data.ctrl[3] = -ctrlValue; // left_leg_motor backward
+              } else {
+                data.ctrl[3] = 0;
+              }
               
-              // Right Leg: S (forward)
-              data.ctrl[4] = keys.has("s") ? ctrlValue : 0; // right_leg_motor
+              // Right Leg: S (forward) / F (backward)
+              if (keys.has("s")) {
+                data.ctrl[4] = ctrlValue; // right_leg_motor forward
+              } else if (keys.has("f")) {
+                data.ctrl[4] = -ctrlValue; // right_leg_motor backward
+              } else {
+                data.ctrl[4] = 0;
+              }
             } else {
               // Automatic animation
               const t = mujocoTimeRef.current / 1000; // Convert to seconds
@@ -558,10 +524,10 @@ export default function MuJoCoTestPage() {
                 </p>
                 <div className="grid grid-cols-2 gap-2 text-xs text-zinc-700 dark:text-zinc-300">
                   <div><kbd className="font-mono">Q</kbd> / <kbd className="font-mono">E</kbd> - Head left/right</div>
-                  <div><kbd className="font-mono">A</kbd> - Left arm</div>
-                  <div><kbd className="font-mono">D</kbd> - Right arm</div>
-                  <div><kbd className="font-mono">W</kbd> - Left leg</div>
-                  <div><kbd className="font-mono">S</kbd> - Right leg</div>
+                  <div><kbd className="font-mono">A</kbd> / <kbd className="font-mono">Z</kbd> - Left arm forward/backward</div>
+                  <div><kbd className="font-mono">D</kbd> / <kbd className="font-mono">X</kbd> - Right arm forward/backward</div>
+                  <div><kbd className="font-mono">W</kbd> / <kbd className="font-mono">R</kbd> - Left leg forward/backward</div>
+                  <div><kbd className="font-mono">S</kbd> / <kbd className="font-mono">F</kbd> - Right leg forward/backward</div>
                   <div><kbd className="font-mono">Space</kbd> - Reset model</div>
                 </div>
               </div>

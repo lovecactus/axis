@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { API_BASE } from "@/lib/api-base";
@@ -119,21 +118,37 @@ export default async function TaskDetailPage({
         <div className="grid gap-6 rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 md:grid-cols-[450px_1fr]">
           <div className="flex flex-col items-start gap-4">
             <div className="flex w-full items-center justify-center rounded-lg border border-zinc-200 bg-gradient-to-br from-zinc-100 via-white to-zinc-50 p-4 shadow-sm dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-900">
-              {/* Image placeholder with 4:3 aspect ratio */}
-              {task.thumbnail ? (
-                <Image
-                  src={task.thumbnail}
-                  alt={task.name}
-                  width={410}
-                  height={308}
-                  className="rounded-lg object-cover"
-                  style={{ aspectRatio: "4/3" }}
+              {/* SVG placeholder with 4:3 aspect ratio */}
+              <svg
+                aria-hidden="true"
+                className="h-[308px] w-[410px] text-zinc-400"
+                viewBox="0 0 90 50"
+                fill="none"
+              >
+                <rect
+                  x="6"
+                  y="6"
+                  width="28"
+                  height="28"
+                  fill="#cfe3ff"
+                  stroke="#9fb6dd"
                 />
-              ) : (
-                <div className="flex h-[308px] w-[410px] items-center justify-center rounded-lg bg-zinc-200 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
-                  <span className="text-sm">暂无预览图</span>
-                </div>
-              )}
+                <rect
+                  x="54"
+                  y="20"
+                  width="20"
+                  height="16"
+                  fill="#ffdede"
+                  stroke="#d6a3a3"
+                />
+                <circle
+                  cx="42"
+                  cy="28"
+                  r="8"
+                  fill="#e0f7e8"
+                  stroke="#b7dec1"
+                />
+              </svg>
             </div>
             <div className="space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
               <div className="flex items-center gap-2">

@@ -248,14 +248,41 @@ sudo systemctl status axis-backend axis-frontend
 
 2. Create `/etc/nginx/sites-available/axis.conf`:
    ```
+   # HTTP server block - serves content on port 80
    server {
        listen 80;
        listen [::]:80;
        server_name 47.77.228.127;  # replace with your IP or domain
 
-       return 301 https://$host$request_uri;
+       location /api/ {
+           proxy_pass http://127.0.0.1:8000;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_set_header X-Forwarded-Proto http;
+       }
+
+       location = /openapi.json {
+           proxy_pass http://127.0.0.1:8000/openapi.json;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_set_header X-Forwarded-Proto http;
+       }
+
+       location / {
+           proxy_pass http://127.0.0.1:3000/;
+           proxy_http_version 1.1;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_set_header X-Forwarded-Proto http;
+           proxy_set_header Upgrade $http_upgrade;
+           proxy_set_header Connection "upgrade";
+       }
    }
 
+   # HTTPS server block - serves content on port 443
    server {
        listen 443 ssl http2;
        listen [::]:443 ssl http2;
@@ -271,7 +298,7 @@ sudo systemctl status axis-backend axis-frontend
            proxy_set_header Host $host;
            proxy_set_header X-Real-IP $remote_addr;
            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-           proxy_set_header X-Forwarded-Proto $scheme;
+           proxy_set_header X-Forwarded-Proto https;
        }
 
        location = /openapi.json {
@@ -279,7 +306,7 @@ sudo systemctl status axis-backend axis-frontend
            proxy_set_header Host $host;
            proxy_set_header X-Real-IP $remote_addr;
            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-           proxy_set_header X-Forwarded-Proto $scheme;
+           proxy_set_header X-Forwarded-Proto https;
        }
 
        location / {
@@ -288,12 +315,13 @@ sudo systemctl status axis-backend axis-frontend
            proxy_set_header Host $host;
            proxy_set_header X-Real-IP $remote_addr;
            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-           proxy_set_header X-Forwarded-Proto $scheme;
+           proxy_set_header X-Forwarded-Proto https;
            proxy_set_header Upgrade $http_upgrade;
            proxy_set_header Connection "upgrade";
        }
    }
    ```
+   > **Note**: The configuration above serves the frontend on both HTTP (port 80) and HTTPS (port 443). If you prefer to redirect all HTTP traffic to HTTPS, replace the HTTP server block's location directives with `return 301 https://$host$request_uri;`.
 3. Enable site and reload:
    ```bash
    sudo ln -s /etc/nginx/sites-available/axis.conf /etc/nginx/sites-enabled/

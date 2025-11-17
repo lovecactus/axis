@@ -1,9 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { API_BASE } from "@/lib/api-base";
-import { MuJoCoViewer } from "@/components/mujoco-viewer";
-import { HUMAN_MODEL_XML } from "@/lib/mujoco-utils";
 
 type Task = {
   id: number;
@@ -117,17 +116,25 @@ export default async function TaskDetailPage({
           </Link>
         </header>
 
-        <div className="grid gap-6 rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 md:grid-cols-[850px_1fr]">
+        <div className="grid gap-6 rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 md:grid-cols-[450px_1fr]">
           <div className="flex flex-col items-start gap-4">
             <div className="flex w-full items-center justify-center rounded-lg border border-zinc-200 bg-gradient-to-br from-zinc-100 via-white to-zinc-50 p-4 shadow-sm dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-900">
-              {/* Using shared human model */}
-              <MuJoCoViewer
-                width={810}
-                height={780}
-                modelXml={HUMAN_MODEL_XML}
-              />
+              {/* Image placeholder with 4:3 aspect ratio */}
+              {task.thumbnail ? (
+                <Image
+                  src={task.thumbnail}
+                  alt={task.name}
+                  width={410}
+                  height={308}
+                  className="rounded-lg object-cover"
+                  style={{ aspectRatio: "4/3" }}
+                />
+              ) : (
+                <div className="flex h-[308px] w-[410px] items-center justify-center rounded-lg bg-zinc-200 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                  <span className="text-sm">暂无预览图</span>
+                </div>
+              )}
             </div>
-
             <div className="space-y-3 text-sm text-zinc-600 dark:text-zinc-300">
               <div className="flex items-center gap-2">
                 <span className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">

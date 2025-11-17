@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { API_BASE } from "@/lib/api-base";
+import { MuJoCoViewer } from "@/components/mujoco-viewer";
+import { HUMAN_MODEL_XML } from "@/lib/mujoco-utils";
 
 type Task = {
   id: number;
@@ -112,14 +114,12 @@ export default async function TaskRunningPage({
         </section>
 
         <div className="grid gap-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 md:grid-cols-[minmax(0,2.25fr)_minmax(0,1fr)]">
-          <div className="flex min-h-[420px] flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed border-zinc-300 bg-zinc-100 text-sm text-zinc-500 dark:border-zinc-700 dark:bg-zinc-950/50 dark:text-zinc-400">
-            任务实时画面（占位）
-            <Link
-              href={{ pathname: "/task-done", query: { id: task.id } }}
-              className="inline-flex items-center rounded-md border border-transparent bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
-            >
-              完成
-            </Link>
+          <div className="flex min-h-[600px] flex-col items-center justify-center gap-4 rounded-xl border border-zinc-200 bg-gradient-to-br from-zinc-100 via-white to-zinc-50 p-4 shadow-sm dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-900">
+            <MuJoCoViewer
+              width={700}
+              height={620}
+              modelXml={HUMAN_MODEL_XML}
+            />
           </div>
 
           <aside className="flex flex-col gap-6 text-sm text-zinc-600 dark:text-zinc-300">
@@ -165,6 +165,16 @@ export default async function TaskRunningPage({
                 <p>剩余时间低于 10 秒时将触发提醒。</p>
               </div>
             </section>
+
+            <section className="space-y-2">
+              <Link
+                href={{ pathname: "/task-done", query: { id: task.id } }}
+                className="inline-flex items-center rounded-md border border-transparent bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
+              >
+                完成
+              </Link>
+            </section>
+
           </aside>
         </div>
       </div>

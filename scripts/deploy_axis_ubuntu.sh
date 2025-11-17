@@ -214,14 +214,51 @@ if [[ ! -f /etc/ssl/private/axis-selfsigned.key || ! -f /etc/ssl/certs/axis-self
 fi
 
 cat <<EOF > /etc/nginx/sites-available/axis.conf
+# HTTP server block - serves content on port 80
 server {
     listen 80;
     listen [::]:80;
     server_name ${SERVER_NAME};
 
-    return 301 https://${DOLLAR}host${DOLLAR}request_uri;
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host ${DOLLAR}host;
+        proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
+        proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto http;
+    }
+
+    location = /openapi.json {
+        proxy_pass http://127.0.0.1:8000/openapi.json;
+        proxy_set_header Host ${DOLLAR}host;
+        proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
+        proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto http;
+    }
+
+    location = /health {
+        proxy_pass http://127.0.0.1:8000/health;
+        proxy_set_header Host ${DOLLAR}host;
+        proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
+        proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto http;
+    }
+
+    # Frontend routes (handled by Next.js)
+    # Supports: /, /tasks, /task-detail?id=X, /task-running?id=X, /task-done?id=X, /mujoco, /admin/database, etc.
+    location / {
+        proxy_pass http://127.0.0.1:3000/;
+        proxy_http_version 1.1;
+        proxy_set_header Host ${DOLLAR}host;
+        proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
+        proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto http;
+        proxy_set_header Upgrade ${DOLLAR}http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
 }
 
+# HTTPS server block - serves content on port 443
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
@@ -237,7 +274,7 @@ server {
         proxy_set_header Host ${DOLLAR}host;
         proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
         proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto ${DOLLAR}scheme;
+        proxy_set_header X-Forwarded-Proto https;
     }
 
     location = /openapi.json {
@@ -245,16 +282,26 @@ server {
         proxy_set_header Host ${DOLLAR}host;
         proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
         proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto ${DOLLAR}scheme;
+        proxy_set_header X-Forwarded-Proto https;
     }
 
+    location = /health {
+        proxy_pass http://127.0.0.1:8000/health;
+        proxy_set_header Host ${DOLLAR}host;
+        proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
+        proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+
+    # Frontend routes (handled by Next.js)
+    # Supports: /, /tasks, /task-detail?id=X, /task-running?id=X, /task-done?id=X, /mujoco, /admin/database, etc.
     location / {
         proxy_pass http://127.0.0.1:3000/;
         proxy_http_version 1.1;
         proxy_set_header Host ${DOLLAR}host;
         proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
         proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto ${DOLLAR}scheme;
+        proxy_set_header X-Forwarded-Proto https;
         proxy_set_header Upgrade ${DOLLAR}http_upgrade;
         proxy_set_header Connection "upgrade";
     }
